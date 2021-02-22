@@ -18,25 +18,25 @@ const recurBSearch = (nums, targetNum) => {
   // items to search and haven't found targetNum
 
   if (nums.length === 0) return false;
+  let middle = Math.floor(nums.length / 2);
+  let midNum = nums[middle];
+  let leftHalf = nums.slice(0, middle);
+  let rightHalf = nums.slice(middle + 1);
+  if (targetNum < midNum) return recurBSearch(leftHalf, targetNum);
+  else if (targetNum > midNum) return recurBSearch(rightHalf, targetNum);
+  else return true;
 
   // determine the slice point (ie the 'middle' of the array).
 
-  let middle = Math.floor(nums.length / 2);
-  let midNum = nums[middle];
 
   // create "left half" and "right half" arrays, not including the slice point.
 
-  let leftHalf = nums.slice(0, middle);
-  let rightHalf = nums.slice(middle + 1);
 
   // if targetNum is less than the value in the array at slice point,
   // return this search on the left half
 
-  if (targetNum < midNum) return recurBSearch(leftHalf, targetNum);
   // if targetNum is greater than the value in the array at slice point,
   //return this search on the right half
-  else if (targetNum > midNum) return recurBSearch(rightHalf, targetNum);
-  else return true;
 
   // if it's not greater than or less than (i.e. 'else'),
   // we know it's equal so return true
@@ -50,7 +50,7 @@ const recurBSearch = (nums, targetNum) => {
  Write an Iterative Binary Search that returns a Boolean value indicating if
  targetNum is within the nums array.
  *******************************************************************/
-const oddNums = [11, 12, 13, 14, 15, 16, 17, 18, 19];
+
 
 const iterBSearch = (nums, targetNum) => {
   // Save references to indices at the beginning, middle, and end of the array
@@ -103,7 +103,33 @@ Write a Recursive Binary Search that returns the Index value of targetNum if it
 is in the nums array, and -1 if it is not found.
 *******************************************************************/
 
+const oddNums = [11, 12, 13, 14, 15, 16, 17, 18, 19];
+
 const recurBSearchIdx = (nums, targetNum) => {
+
+  let orig = nums
+
+  console.log('orig:', orig)
+
+  if (nums.length === 0) return -1;
+
+  let middle = Math.floor(nums.length / 2);
+  let midNum = nums[middle];
+  // console.log('midNum:', midNum)
+  let leftHalf = nums.slice(0, middle);
+  // console.log('leftHalf:', leftHalf)
+  let rightHalf = nums.slice(middle + 1);
+  // console.log('rightHalf:', rightHalf)
+
+  if (targetNum < midNum) return recurBSearchIdx(leftHalf, targetNum);
+  else if (targetNum > midNum) {
+    let rightReturn = recurBSearchIdx(rightHalf, targetNum);
+    if (rightReturn === -1) return -1
+    else {
+      return middle + rightReturn + 1
+    }
+  }
+  else return middle;
   // this implementation is identical to version 1, except rather than
   // returning true/false, return the index where you found the item
   // (instead of true) or -1 (instead of false).
@@ -113,6 +139,9 @@ const recurBSearchIdx = (nums, targetNum) => {
   // recursive call into a variable, and adding it to the current stack-frame's
   // midIdx + 1.
 };
+
+console.log(recurBSearchIdx(oddNums, 13));
+
 
 /*******************************************************************
 BINARY SEARCH VERSION 4:
@@ -148,6 +177,7 @@ const recurBSearchIdxV2 = (nums, targetNum, low = null, hi = null) => {
   */
 };
 
+console.log(recurBSearchIdx(oddNums, 13));
 /*******************************************************************
 BINARY SEARCH VERSION 5:
 
