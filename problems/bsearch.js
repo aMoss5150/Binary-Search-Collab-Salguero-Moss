@@ -196,20 +196,47 @@ const recurBSearchIdxV2 = (nums, targetNum, low = null, hi = null) => {
     return slicePoint;
   }
 };
-const oddNums = [11, 12, 13, 14, 15, 16, 17, 18, 19];
 
-console.log(recurBSearchIdxV2(oddNums, 0));
+// console.log(recurBSearchIdxV2(oddNums, 0));
 /*******************************************************************
 BINARY SEARCH VERSION 5:
 
 Write an Iterative Binary Search that returns the Index value of targetNum if
 it is in the nums array, and -1 if it is not found.
 *******************************************************************/
+// this is identical to Version 2, but return the index or -1 rather than
+// true or false
 
 const iterBSearchIdx = (nums, targetNum) => {
-  // this is identical to Version 2, but return the index or -1 rather than
-  // true or false
+
+  let lower = 0
+  let upper = nums.length - 1
+
+  while (lower < upper) {
+    let mid = Math.round((lower + upper) / 2)
+    console.log('mid:', mid)
+
+    if (mid === upper) {
+      return -1
+    } else if (targetNum > nums[mid]) {
+      lower = mid
+      console.log('lower:', lower)
+    } else if (targetNum < nums[mid]) {
+      upper = mid
+      console.log('upper:', upper)
+    } else if (nums[mid] === undefined) {
+      return -1
+    }
+    else {
+      return mid
+    }
+  }
+  return -1
 };
+
+const oddNums = [11, 12, 13, 14, 15, 16, 17, 18, 19];
+console.log(iterBSearchIdx(oddNums, 11));
+
 
 module.exports = {
   recurBSearch,
